@@ -1,2 +1,110 @@
 # Minecraft Server
-Docker-based Minecraft server setup (WIP).
+
+Docker-based Minecraft Java Edition server setup using a custom Docker image.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Usage](#usage)
+- [Testing](#testing)
+- [Notes](#notes)
+
+## Prerequisites
+
+- Docker & Docker Compose installed
+- Python 3.x installed (for testing)
+- `server.jar` (gitignored, not tracked in this repository)
+
+Download the Java Edition server JAR from: https://www.minecraft.net/de-de/download/server
+
+Place the downloaded `server.jar` in the root of this repository before starting.
+
+> **Note:** By starting the server, you accept the [Minecraft End User License Agreement (EULA)](https://www.minecraft.net/en-us/eula). Review it before use.
+
+## Usage
+
+### Start the Server
+
+```bash
+# Build and start the server in the foreground
+docker compose up --build
+
+# Build and start the server in the background
+docker compose up --build -d
+
+# Stop the server
+docker compose down
+```
+
+### Configuration
+
+Environment variables are configured in `docker-compose.yaml`.
+
+Default settings:
+
+```yaml
+environment:
+  DIFFICULTY: "normal"
+```
+
+Available options for `DIFFICULTY`: `peaceful`, `easy`, `normal`, `hard`
+
+To extend the configuration, add new variables to `entrypoint.sh`:
+
+```bash
+echo "max-players=${MAX_PLAYERS:-20}" >> /app/server.properties
+```
+
+Then expose the variable in `docker-compose.yaml`:
+
+```yaml
+environment:
+  DIFFICULTY: "normal"
+  MAX_PLAYERS: "20"
+```
+
+### Data Persistence
+
+World data and server files are stored in a Docker volume (`local_data`). The volume survives container restarts and `docker compose down`.
+
+To fully reset the server and delete all world data:
+
+```bash
+docker compose down --volumes
+```
+
+## Testing
+
+The test suite uses [mcstatus](https://github.com/py-mine/mcstatus) to verify that the server is reachable. Make sure the server is running before executing the commands below.
+
+Create and activate a virtual environment:
+
+```bash
+python -m venv .venv
+
+# macOS/Linux
+source .venv/bin/activate
+
+# Windows
+.venv\Scripts\activate
+```
+
+Install dependencies (includes `mcstatus`):
+
+```bash
+pip install -r requirements.txt
+```
+
+Check server status:
+
+```bash
+# Full status (version, players, ping)
+mcstatus localhost:8888 status
+
+# Latency only
+mcstatus localhost:8888 ping
+```
+
+## Notes
+
+- The server listens on container port `25565`, mapped to host port `8888`.
