@@ -1,0 +1,15 @@
+# Git
+.git
+.gitignore
+
+# macOS
+.DS_Store
+
+# Python (virtual environment)
+.venv
+__pycache__/
+*.pyc
+
+# Project Files
+docker-compose.yaml
+README.md
