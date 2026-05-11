@@ -6,6 +6,8 @@ Docker-based Minecraft Java Edition server setup using a custom Docker image.
 
 - [Prerequisites](#prerequisites)
 - [Usage](#usage)
+- [Configuration](#configuration)
+- [Data Persistence](#data-persistence)
 - [Testing](#testing)
 - [Notes](#notes)
 
@@ -26,6 +28,9 @@ Place the downloaded `server.jar` in the root of this repository before starting
 ### Start the Server
 
 ```bash
+# Copy the environment template and adjust if needed
+cp .env.template .env
+
 # Build and start the server in the foreground
 docker compose up --build
 
@@ -38,16 +43,17 @@ docker compose down
 
 ### Configuration
 
-Environment variables are configured in `docker-compose.yaml`.
+Environment variables are configured via a `.env` file in the root of the repository.
 
-Default settings:
+Create a `.env` file before starting the server:
 
-```yaml
-environment:
-  DIFFICULTY: "normal"
+```env
+DIFFICULTY=normal
 ```
 
 Available options for `DIFFICULTY`: `peaceful`, `easy`, `normal`, `hard`
+
+### Adding More Variables
 
 To extend the configuration, add new variables to `entrypoint.sh`:
 
@@ -55,12 +61,11 @@ To extend the configuration, add new variables to `entrypoint.sh`:
 echo "max-players=${MAX_PLAYERS:-20}" >> /app/server.properties
 ```
 
-Then expose the variable in `docker-compose.yaml`:
+Then add the variable to your `.env` file:
 
-```yaml
-environment:
-  DIFFICULTY: "normal"
-  MAX_PLAYERS: "20"
+```env
+DIFFICULTY=normal
+MAX_PLAYERS=20
 ```
 
 ### Data Persistence

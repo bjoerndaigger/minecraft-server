@@ -13,3 +13,4 @@ __pycache__/
 # Project Files
 docker-compose.yaml
 README.md
+.env

@@ -10,8 +10,8 @@ services:
     ports:
       # Map host port 8888 to Minecraft's default port 25565
       - "8888:25565"
-    environment:
-      DIFFICULTY: "normal"
+    env_file:
+      - .env
     volumes:
       # Mounts the "local_data" volume into /app (persistent storage)
       - local_data:/app/
