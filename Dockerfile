@@ -1,14 +1,15 @@
-# Eclipse Temurin JRE 21 - runtime only, no compiler (smaller image size)
-FROM eclipse-temurin:21
+# Java runtime image
+FROM eclipse-temurin:25-jre
 
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy the Minecraft server JAR and the entrypoint.sh into the container
-COPY server.jar /app/
-COPY entrypoint.sh /app/
+# Install curl and download the Minecraft server JAR
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+RUN curl -o server.jar -L "https://piston-data.mojang.com/v1/objects/97ccd4c0ed3f81bbb7bfacddd1090b0c56f9bc51/server.jar"
 
-# Accept the minecraft licence (EULA) and make entrypoint executable
+# Copy entrypoint script and accept the Minecraft licence
+COPY entrypoint.sh /app/
 RUN echo "eula=true" > /app/eula.txt
 RUN chmod +x /app/entrypoint.sh
 

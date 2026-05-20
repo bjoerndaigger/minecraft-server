@@ -15,11 +15,6 @@ Docker-based Minecraft Java Edition server setup using a custom Docker image.
 
 - Docker & Docker Compose installed
 - Python 3.x installed (for testing)
-- `server.jar` (gitignored, not tracked in this repository)
-
-Download the Java Edition server JAR from: https://www.minecraft.net/de-de/download/server
-
-Place the downloaded `server.jar` in the root of this repository before starting.
 
 > **Note:** By starting the server, you accept the [Minecraft End User License Agreement (EULA)](https://www.minecraft.net/en-us/eula). Review it before use.
 

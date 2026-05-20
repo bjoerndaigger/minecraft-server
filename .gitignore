@@ -1,5 +1,4 @@
-# Minecraft Server Files
-server.jar
+# Environment variables
 .env
 
 # macOS
