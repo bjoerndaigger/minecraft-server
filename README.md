@@ -4,17 +4,31 @@ Docker-based Minecraft Java Edition server setup using a custom Docker image.
 
 ## Table of Contents
 
+- [Description](#description)
 - [Prerequisites](#prerequisites)
+- [Quickstart](#quickstart)
 - [Usage](#usage)
-- [Configuration](#configuration)
-- [Data Persistence](#data-persistence)
+  - [Configuration](#configuration)
+  - [Adding More Variables](#adding-more-variables)
+  - [Data Persistence](#data-persistence)
 - [Testing](#testing)
 - [Notes](#notes)
+
+## Description
+
+A reproducible, configurable Minecraft Java Edition server that runs in Docker. Configuration is handled via environment variables, world data persists in a Docker volume, and the server starts with a single command.
 
 ## Prerequisites
 
 - Docker & Docker Compose installed
 - Python 3.x installed (for testing)
+
+## Quickstart
+
+```bash
+cp .env.template .env
+docker compose up --build
+```
 
 > **Note:** By starting the server, you accept the [Minecraft End User License Agreement (EULA)](https://www.minecraft.net/en-us/eula). Review it before use.
 
