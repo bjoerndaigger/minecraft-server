@@ -1,33 +1,30 @@
 # Minecraft Server
 
-Docker-based Minecraft Java Edition server setup using a custom Docker image.
+A reproducible, configurable Minecraft Java Edition server running in Docker using a custom image. Configuration is managed via environment variables, world data persists in a Docker volume and the server starts with a single command.
 
 ## Table of Contents
 
-- [Description](#description)
-- [Prerequisites](#prerequisites)
 - [Quickstart](#quickstart)
 - [Usage](#usage)
+  - [Start the Server](#start-the-server)
   - [Configuration](#configuration)
   - [Adding More Variables](#adding-more-variables)
   - [Data Persistence](#data-persistence)
 - [Testing](#testing)
 - [Notes](#notes)
 
-## Description
+## Quickstart
 
-A reproducible, configurable Minecraft Java Edition server that runs in Docker. Configuration is handled via environment variables, world data persists in a Docker volume, and the server starts with a single command.
-
-## Prerequisites
+### Prerequisites
 
 - Docker & Docker Compose installed
 - Python 3.x installed (for testing)
 
-## Quickstart
+Run the following commands to start the server:
 
 ```bash
 cp .env.template .env
-docker compose up --build
+docker compose up --build -d
 ```
 
 > **Note:** By starting the server, you accept the [Minecraft End User License Agreement (EULA)](https://www.minecraft.net/en-us/eula). Review it before use.
@@ -69,6 +66,8 @@ To extend the configuration, add new variables to `entrypoint.sh`:
 ```bash
 echo "max-players=${MAX_PLAYERS:-20}" >> /app/server.properties
 ```
+
+`>>` appends the property to the existing file instead of overwriting it.
 
 Then add the variable to your `.env` file:
 
