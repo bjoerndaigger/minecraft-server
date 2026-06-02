@@ -1,11 +1,14 @@
 #!/bin/bash
 # Use Bash to run this script
 
-# Create server.properties if it doesn't exist
-if [ ! -f /app/server.properties ]; then
-  # Set difficulty, default to "normal" if DIFFICULTY is unset
-  echo "difficulty=${DIFFICULTY:-normal}" > /app/server.properties
-fi
+# Generate server.properties from environment variables prefixed with MC_
+printenv | grep "^MC_" | while IFS='=' read -r key value; do
+  key=$(echo "$key" | sed 's/^MC_//' | tr '[:upper:]' '[:lower:]' | tr '_' '-')
+  echo "$key=$value"
+done > /data/server.properties
 
-# Start Minecraft server
-java -jar /app/server.jar
+# Copy eula.txt to persistent data directory
+cp /app/eula.txt /data/eula.txt
+
+# Start Minecraft server from /data directory so all files are written there
+cd /data && java -jar /app/server.jar --nogui

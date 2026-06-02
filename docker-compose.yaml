@@ -13,8 +13,8 @@ services:
     env_file:
       - .env
     volumes:
-      # Mounts the "local_data" volume into /app (persistent storage)
-      - local_data:/app/
+      # Mounts the "local_data" volume into /data (persistent Minecraft server data)
+      - local_data:/data
 
 # Defines the named volume "local_data"
 volumes:

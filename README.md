@@ -6,9 +6,7 @@ A reproducible, configurable Minecraft Java Edition server running in Docker usi
 
 - [Quickstart](#quickstart)
 - [Usage](#usage)
-  - [Start the Server](#start-the-server)
   - [Configuration](#configuration)
-  - [Adding More Variables](#adding-more-variables)
   - [Data Persistence](#data-persistence)
 - [Testing](#testing)
 - [Notes](#notes)
@@ -18,7 +16,7 @@ A reproducible, configurable Minecraft Java Edition server running in Docker usi
 ### Prerequisites
 
 - Docker & Docker Compose installed
-- Python 3.x installed (for testing)
+- Python 3.10+ installed (for testing)
 
 Run the following commands to start the server:
 
@@ -27,58 +25,34 @@ cp .env.template .env
 docker compose up --build -d
 ```
 
-> **Note:** By starting the server, you accept the [Minecraft End User License Agreement (EULA)](https://www.minecraft.net/en-us/eula). Review it before use.
-
-## Usage
-
-### Start the Server
+Stop the server:
 
 ```bash
-# Copy the environment template and adjust if needed
-cp .env.template .env
-
-# Build and start the server in the foreground
-docker compose up --build
-
-# Build and start the server in the background
-docker compose up --build -d
-
-# Stop the server
 docker compose down
 ```
+
+> [!NOTE]  
+> By starting the server, you accept the [Minecraft End User License Agreement (EULA)](https://www.minecraft.net/en-us/eula). Review it before use.
+
+## Usage
 
 ### Configuration
 
 Environment variables are configured via a `.env` file in the root of the repository.
+All variables prefixed with `MC_` are automatically converted into entries in `server.properties`.
 
-Create a `.env` file before starting the server:
-
-```env
-DIFFICULTY=normal
-```
-
-Available options for `DIFFICULTY`: `peaceful`, `easy`, `normal`, `hard`
-
-### Adding More Variables
-
-To extend the configuration, add new variables to `entrypoint.sh`:
-
-```bash
-echo "max-players=${MAX_PLAYERS:-20}" >> /app/server.properties
-```
-
-`>>` appends the property to the existing file instead of overwriting it.
-
-Then add the variable to your `.env` file:
+To add a new server setting, use the format `MC_<SETTING>=<VALUE>`, for example:
 
 ```env
-DIFFICULTY=normal
-MAX_PLAYERS=20
+MC_MAX_PLAYERS=20
 ```
+
+For a complete list of available server properties, see:
+https://minecraft.wiki/w/Server.properties
 
 ### Data Persistence
 
-World data and server files are stored in a Docker volume (`local_data`). The volume survives container restarts and `docker compose down`.
+World data and server files are stored in a Docker volume (`local_data`) mounted at `/data`. The volume survives container restarts and `docker compose down`.
 
 To fully reset the server and delete all world data:
 
