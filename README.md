@@ -38,14 +38,8 @@ docker compose down
 
 ### Configuration
 
-Environment variables are configured via a `.env` file in the root of the repository.
-All variables prefixed with `MC_` are automatically converted into entries in `server.properties`.
-
-To add a new server setting, use the format `MC_<SETTING>=<VALUE>`, for example:
-
-```env
-MC_MAX_PLAYERS=20
-```
+Settings are mapped directly to `server.properties` via `server.properties.template`.
+Only variables defined in the template will be written to the configuration. This prevents accidental or unsupported properties from being set.
 
 For a complete list of available server properties, see:
 https://minecraft.wiki/w/Server.properties
@@ -95,3 +89,4 @@ mcstatus localhost:8888 ping
 ## Notes
 
 - The server listens on container port `25565`, mapped to host port `8888`.
+- Server configuration is generated at container startup from `server.properties.template`. To add or remove settings, edit both `server.properties.template` and `.env.template`, copy `.env.template` to `.env`, then rebuild the image with `docker compose up --build`.
