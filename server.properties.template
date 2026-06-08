@@ -1,0 +1,15 @@
+gamemode=${GAMEMODE}
+difficulty=${DIFFICULTY}
+allow-cheats=${ALLOW_CHEATS}
+force-gamemode=${FORCE_GAMEMODE}
+level-name=${LEVEL_NAME}
+level-seed=${LEVEL_SEED}
+view-distance=${VIEW_DISTANCE}
+simulation-distance=${SIMULATION_DISTANCE}
+max-players=${MAX_PLAYERS}
+online-mode=${ONLINE_MODE}
+allow-flight=${ALLOW_FLIGHT}
+player-idle-timeout=${PLAYER_IDLE_TIMEOUT}
+spawn-protection=${SPAWN_PROTECTION}
+server-port=${SERVER_PORT}
+motd=${MOTD}
